@@ -36,15 +36,14 @@ Aluno *turma(std::string nomes[], int matriculas[], int N) {
     Aluno *t;
 
     t = new Aluno[N];
-    for (int i = 0; i < N; i++)
-    {
+    for (int i = 0; i < N; i++) {
         Aluno* aluno = new Aluno;
         aluno->escreveMatricula(matriculas[i]);
         aluno->escreveNome(nomes[i]);
-        
-        t[i] = *aluno;
-    }
 
+        t[i] = *aluno;
+        delete aluno;
+    }
     return t;
 }
 
@@ -58,14 +57,12 @@ Aluno *turmas_uniao(Aluno t1[], Aluno t2[], int N1, int N2) {
     Aluno *tu;
     tu = new Aluno[N1 + N2];
 
-    for (int i = 0; i < N1; i++)
-    {
+    for (int i = 0; i < N1; i++) {
         tu[i] = t1[i];
     }
-    for (int i = 0; i < N2; i++)
-    {
+    for (int i = 0; i < N2; i++) {
         tu[N1 + i] = t2[i];
-    }    
+    }
 
     return tu;
 }
@@ -81,7 +78,12 @@ void turmas_divisao(Aluno t[], int k, int N, Aluno **pt1, Aluno **pt2) {
     Aluno *t1 = new Aluno[k];
     Aluno *t2 = new Aluno[N-k];
 
-    // ... COLOQUE SEU CÓDIGO AQUI ...
+    for (int i = 0; i < k; i++) {
+        t1[i] = t[i];
+    }
+    for (int i = 0; i < N-k; i++) {
+        t2[i] = t[k + i];
+    }
 
     *pt1 = t1;
     *pt2 = t2;
