@@ -34,6 +34,7 @@ vetor t alocado de saida: [{'Fulano',1010}, {'Beltrano',2020}, {'Ciclano':3030}]
 
 Aluno *turma(std::string nomes[], int matriculas[], int N) {
     Aluno *t;
+    //PERGUNTAR
 
     t = new Aluno[N];
     for (int i = 0; i < N; i++) {
