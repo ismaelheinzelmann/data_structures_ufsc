@@ -8,7 +8,7 @@
 namespace structures {
 
 template <typename T> class ArrayList {
- public:
+  public:
     ArrayList();
     explicit ArrayList(std::size_t max_size);
     ~ArrayList();
@@ -34,7 +34,7 @@ template <typename T> class ArrayList {
     const T &operator[](std::size_t index) const;
     // descricao do 'operator []' na FAQ da disciplina
 
- private:
+  private:
     T *contents;
     std::size_t size_;
     std::size_t max_size_;
@@ -65,7 +65,7 @@ template <typename T> inline void ArrayList<T>::push_front(const T &data) {
         throw std::out_of_range("list full");
     }
     size_++;
-    for (size_t i = size() - 1; i > 0; i--) {
+    for (std::size_t i = size() - 1; i > 0; i--) {
         contents[i] = contents[i - 1];
     }
     contents[0] = data;
@@ -84,11 +84,11 @@ inline void ArrayList<T>::insert(const T &data, std::size_t index) {
     if (full()) {
         throw std::out_of_range("list full");
     }
-    if (index >= size()) {
+    if (index > size()) {
         throw std::out_of_range("out of bounds");
     }
     size_++;
-    for (size_t i = size() - 1; i > index; i--) {
+    for (std::size_t i = size() - 1; i > index; i--) {
         contents[i] = contents[i - 1];
     }
     contents[index] = data;
@@ -128,10 +128,10 @@ template <typename T> inline T ArrayList<T>::pop(std::size_t index) {
     }
 
     T ret;
-    memcpy(&ret, &contents[index], sizeof(T));
+    ret = contents[index];
     size_--;
 
-    for (size_t i = index; i < size(); i++) {
+    for (std::size_t i = index; i < size(); i++) {
         contents[i] = contents[i + 1];
     }
     return ret;
@@ -150,20 +150,20 @@ template <typename T> inline T ArrayList<T>::pop_front() {
         throw std::out_of_range("list empty");
     }
     T ret;
-    memcpy(&ret, contents, sizeof(T));
+    ret = contents[0];
 
     size_--;
-    for (size_t i = 0; i < size(); i++) {
+    for (std::size_t i = 0; i < size(); i++) {
         contents[i] = contents[i + 1];
     }
     return ret;
 }
 
 template <typename T> inline void ArrayList<T>::remove(const T &data) {
-    size_t index = find(data);
+    std::size_t index = find(data);
 
-    if (index != max_size()) {
-        for (size_t i = index; i < size(); i++) {
+    if (index != size()) {
+        for (std::size_t i = index; i < size() - 1; i++) {
             contents[i] = contents[i + 1];
         }
         size_--;
@@ -179,23 +179,20 @@ template <typename T> inline bool ArrayList<T>::empty() const {
 }
 
 template <typename T> inline bool ArrayList<T>::contains(const T &data) const {
-    if (empty()) {
-        throw std::out_of_range("empty list");
-    }
-    return find(data) == max_size() ? false : true;
+    return find(data) == size() ? false : true;
 }
 
 template <typename T>
 inline std::size_t ArrayList<T>::find(const T &data) const {
     if (empty()) {
-        throw std::out_of_range("empty list");
+        return size();
     }
-    for (size_t i = 0; i < size(); i++) {
+    for (std::size_t i = 0; i < size(); i++) {
         if (data == contents[i]) {
             return i;
         }
     }
-    return max_size();
+    return size();
 }
 
 template <typename T> inline std::size_t ArrayList<T>::size() const {
@@ -230,4 +227,4 @@ template <typename T>
 inline const T &ArrayList<T>::operator[](std::size_t index) const {
     return contents[index];
 }
-}  // namespace structures
+} // namespace structures
