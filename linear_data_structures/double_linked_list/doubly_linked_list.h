@@ -1,11 +1,11 @@
 /// Copyright [2021] <Ismael Coral Hoepers Heinzelmann>
-#include <stdio.h>
-#include <stdexcept>
 #include <cstdint>
+#include <stdexcept>
+#include <stdio.h>
 namespace structures {
 
 template <typename T> class DoublyLinkedList {
- public:
+  public:
     DoublyLinkedList() {
         size_ = 0;
         head = nullptr;
@@ -142,8 +142,8 @@ template <typename T> class DoublyLinkedList {
             return ret;
         }
 
-        Node * old_tail = tail;
-        Node * new_tail = tail->prev();
+        Node *old_tail = tail;
+        Node *new_tail = tail->prev();
         T ret = old_tail->data();
 
         new_tail->next(nullptr);
@@ -194,20 +194,20 @@ template <typename T> class DoublyLinkedList {
 
     T &at(std::size_t index) {
         if (empty() || index >= size()) {
-        throw std::out_of_range("");
-    }
-    if (index < size() / 2) {
-        Node *current = head;
-        for (std::size_t i = 0; i < index; i++) {
-            current = current->next();
+            throw std::out_of_range("");
+        }
+        if (index < size() / 2) {
+            Node *current = head;
+            for (std::size_t i = 0; i < index; i++) {
+                current = current->next();
+            }
+            return current->data();
+        }
+        Node *current = tail;
+        for (std::size_t i = size() - 1; i > index; i--) {
+            current = current->prev();
         }
         return current->data();
-    }
-    Node *current = tail;
-    for (std::size_t i = size() - 1; i > index; i--) {
-        current = current->prev();
-    }
-    return current->data();
     }
     const T &at(std::size_t index) const {
         if (empty() || index >= size()) {
@@ -242,9 +242,9 @@ template <typename T> class DoublyLinkedList {
     }
     std::size_t size() const { return size_; }
 
- private:
-    class Node {  // implementar cada um dos métodos de Node
-     public:
+  private:
+    class Node { // implementar cada um dos métodos de Node
+      public:
         explicit Node(const T &data) {
             data_ = data;
             prev_ = nullptr;
@@ -274,15 +274,15 @@ template <typename T> class DoublyLinkedList {
 
         void next(Node *node) { next_ = node; }
 
-     private:
+      private:
         T data_;
         Node *prev_;
         Node *next_;
     };
 
-    Node *head;  // primeiro da lista
-    Node *tail;  // ultimo da lista
+    Node *head; // primeiro da lista
+    Node *tail; // ultimo da lista
     std::size_t size_;
 };
 
-}  // namespace structures
+} // namespace structures
